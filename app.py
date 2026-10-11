@@ -20,6 +20,12 @@ st.set_page_config(
     page_icon="✨",
     layout="wide"
 )
+# Protection par mot de passe
+mot_de_passe = st.text_input("🔑 Mot de passe", type="password")
+
+if mot_de_passe != st.secrets.get("APP_PASSWORD", "Gpereira8989@&"):
+    st.warning("🔒 Accès restreint. Veuillez entrer le mot de passe.")
+    st.stop()
 
 CUSTOM_CSS = """
 <style>
