@@ -308,39 +308,52 @@ Ton rôle est d'analyser l'image de cette diapositive de cours et de la converti
 ======================================================================
 1. RÈGLES D'ÉLIMINATION STRICTE DU BRUIT ET DES MÉTADONNÉES
 ======================================================================
-- SUPPRESSION DU DÉCOR INSTITUTIONNEL : Ignore et élimine TOUTES les mentions récurrentes, filigranes, logos, en-têtes, pieds de page et masques de diapositives.
-- ZÉRO VERBOSITÉ SYSTÈME : Ne rédige AUCUNE phrase d'introduction, AUCUNE conclusion et AUCUN bloc de code Markdown global.
+- SUPPRESSION DU DÉCOR INSTITUTIONNEL : Ignore et élimine TOUTES les mentions récurrentes, filigranes, logos, en-têtes, pieds de page et masques de diapositives (ex. noms d'établissements, codes de cours "BUT MLT", numéros de diapositive, dates).
+- ZÉRO VERBOSITÉ SYSTÈME : Ne rédige AUCUNE phrase d'introduction ("Voici la synthèse..."), AUCUNE conclusion et AUCUN bloc de code Markdown global (pas de balises ```markdown ... ``` autour de ta réponse).
 - AUCUN SÉPARATEUR PARASITE : Ne génère aucune ligne horizontale de séparation de type `---` dans le corps du texte.
+- CONCISION RIGOUREUSE : Élimine le remplissage inutile. Va droit à l'essentiel avec un style percutant.
 
 ======================================================================
 2. DIAGNOSTIC ET DÉTECTION VISION (OBLIGATOIRE EN PREMIÈRE LIGNE)
 ======================================================================
-- Si la diapositive contient un schéma synoptique, un organigramme, un graphique ou une illustration :
+Examine avec précision l'organisation visuelle de la diapositive :
+- Si la diapositive contient un schéma synoptique, un organigramme, un graphique, une illustration, une carte ou un tableau complexe :
   --> Première ligne : ---VISUEL_DETECTE: OUI---
   --> Deuxième ligne : CADRE_VISUEL: [ymin, xmin, ymax, xmax]
-- Sinon :
+      (où ymin, xmin, ymax, xmax sont des entiers entre 0 et 1000 délimitant la zone du visuel).
+- Si la diapositive ne contient que du texte brut ou des puces sans valeur graphique :
   --> Première ligne : ---VISUEL_DETECTE: NON---
 
 ======================================================================
-3. STRATÉGIE RÉDACTIONNELLE
+3. STRATÉGIE RÉDACTIONNELLE STRICTE ET ANTI-DOUBLON
 ======================================================================
 --- CAS 1 : SI VISUEL_DETECTE EST OUI ---
-- Rédige une ANALYSE PÉDAGOGIQUE ET SYNTHÉTIQUE sous le visuel. Titre : `#### Explication & Synthèse du schéma`.
+⚠️ INTERDICTION ABSOLUE DE TRANSCRIRE OU RECOPIER LE TEXTE DÉJÀ PRÉSENT DANS L'IMAGE OU LE SCHÉMA.
+L'image découpée sera insérée au-dessus dans le document Word et se suffit à elle-même.
+- Rédige UNIQUEMENT une courte analyse synthétique sous le visuel (3 à 5 puces très concises maximum).
+- Titre obligatoire : `#### Explication & Synthèse du schéma`
+- Contenu : Explique la dynamique globale, le flux logique ou la règle clé à retenir. Ne réécris AUCUNE bulle, légende, étiquette ou texte déjà lisible sur la figure.
+
 --- CAS 2 : SI VISUEL_DETECTE EST NON ---
-- Restructure et rédige L'INTÉGRALITÉ du contenu sous forme de cours rédigé.
+- Restructure et rédige le contenu sous la forme d'un cours fluide et synthétique.
+- Organise le texte sous forme de fiches à puces claires, lisibles et directement révisables.
 
 ======================================================================
 4. FORMULES MATHÉMATIQUES ET UNITÉS (SANS SYNTAXE LATEX)
 ======================================================================
 - INTERDICTION ABSOLUE DU LATEX : N'utilise JAMAIS de symboles $,$$, \\text{}, \\times, \\frac.
-- ÉCRITURE UNICODE LISIBLE : `1 m³ = 330 kg`, `1 ml = 1 750 kg`, `Poids Volumétrique (PV) = Volume (m³) × 330 kg`.
+- ÉCRITURE UNICODE LISIBLE : Rédige toutes les formules en texte brut Unicode immédiatement lisible :
+  * Exexmples : `1 m³ = 330 kg`, `1 ml = 1 750 kg`, `Poids Volumétrique (PV) = Volume (m³) × 330 kg`.
 
 ======================================================================
-5. NORMES DE FORMATAGE MARKDOWN STRICTES
+5. NORMES DE FORMATAGE MARKDOWN STRICTES (POUR EXPORT DOCX)
 ======================================================================
-- Titres : `### ` pour sujets principaux, `#### ` pour sous-sections.
-- Mots-clés en gras : `**terme**`.
-- Listes à puces (`- `) et encadrés (`> `).
+- HIÉRARCHIE DES TITRES :
+  * `### ` pour les sujets principaux / notions clés.
+  * `#### ` pour les sous-sections et analyses de schémas.
+- MOTS CLÉS EN GRAS : Applique du gras (`**notion clé**`) sur les termes techniques, valeurs et définitions importantes.
+- LISTES À PUCES : Utilisez `- ` pour les énumérations simples.
+- ENCADRÉS : Utilisez `> ` pour les définitions officielles et règles clés.
 """
 
 def appeler_gemini(client_gemini, img_path, model_choice):
